@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:movie_app/pages/home/home_page.dart';
 import 'package:movie_app/pages/search/search_page.dart';
 import 'package:movie_app/pages/top_rated/top_rated_page.dart';
@@ -11,11 +12,13 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  PageController pageController = PageController();
   int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        controller: pageController,
         children: const [
           HomePage(),
           SearchPage(),
@@ -27,6 +30,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         iconSize: 30.0,
         selectedItemColor: Colors.red,
         onTap: (int index) {
+            pageController.animateToPage(
+              index, 
+              duration: Duration(milliseconds: 400), 
+              curve: Curves.ease,
+            );
             setState(() {
               currentPage = index;
             });
